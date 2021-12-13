@@ -126,13 +126,13 @@ class NavalBattleMatch(object):
         self.__computer_board.place_piece(piece, NavalBattlePosition(row, column).to_position())
 
     def __initial_setup(self) -> None:
-        self.__place_new_piece('a', 1, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('b', 2, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('c', 3, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('d', 4, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('e', 5, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('f', 6, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('g', 7, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('h', 8, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('i', 9, Submarine(self.__computer_board, Player.COMPUTER))
-        self.__place_new_piece('j', 10, Submarine(self.__computer_board, Player.COMPUTER))
+        i = 0
+        while i < ProgramConstants.TOTAL_SUBMARINES:
+            row = self.__generate_random_char()
+            column = self.__generate_random_int()
+
+            position = NavalBattlePosition(row, column).to_position()
+
+            if not self.__computer_board.there_is_a_piece(position):
+                self.__place_new_piece(row, column, Submarine(self.__computer_board, Player.COMPUTER))
+                i += 1
