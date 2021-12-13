@@ -4,7 +4,6 @@ from navalbattle.naval_battle_exception import NavalBattleException
 
 
 class NavalBattlePosition(object):
-    __ROWS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j']
 
     def __init__(self, row: str, column: int) -> None:
         if row < ProgramConstants.FIRST_ROW or row > ProgramConstants.LAST_ROW \
@@ -26,7 +25,7 @@ class NavalBattlePosition(object):
         return self.__column
 
     def to_position(self) -> Position:
-        row = self.__ROWS.index(self.__row) - self.__ROWS.index(ProgramConstants.FIRST_ROW)
+        row = ProgramConstants.ROW_CHARS.index(self.__row) - ProgramConstants.ROW_CHARS.index(ProgramConstants.FIRST_ROW)
         column = ProgramConstants.COLUMNS - self.__column
 
         return Position(row, column)
