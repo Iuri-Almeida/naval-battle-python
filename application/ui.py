@@ -2,12 +2,25 @@ from typing import List
 
 from application.program_constants import ProgramConstants
 from navalbattle.naval_battle_piece import NavalBattlePiece
+from navalbattle.naval_battle_position import NavalBattlePosition
 from navalbattle.player import Player
 
 
 class UI(object):
 
     __ROWS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
+
+    @staticmethod
+    def read_naval_battle_position(txt: str) -> NavalBattlePosition:
+        try:
+            s = input(txt).strip().lower()
+
+            row = s[0]
+            column = 10 - int(s[1:])
+
+            return NavalBattlePosition(row, column)
+        except RuntimeError:
+            raise ValueError('Error reading Position. Valida values are from a0 to j9.')
 
     @staticmethod
     def print_board(pieces: List[List[NavalBattlePiece]]):

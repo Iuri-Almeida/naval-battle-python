@@ -31,10 +31,15 @@ class NavalBattleMatch(object):
 
         return pieces
 
+    def perform_move(self, target_position: NavalBattlePosition) -> None:
+        target = target_position.to_position()
+        self.__make_move(target)
+
+    def __make_move(self, target: Position) -> None:
+        self.__board.place_piece(Submarine(self.__board, Player.PERSON), target)
+
     def __place_new_piece(self, row: str, column: int, piece: NavalBattlePiece) -> None:
         self.__board.place_piece(piece, NavalBattlePosition(row, column).to_position())
 
     def __initial_setup(self) -> None:
-        self.__place_new_piece('a', 1, Submarine(self.__board, Player.PERSON))
-        self.__place_new_piece('a', 2, Submarine(self.__board, Player.PERSON))
-        self.__place_new_piece('a', 3, Submarine(self.__board, Player.PERSON))
+        pass
