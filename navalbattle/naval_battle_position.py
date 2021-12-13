@@ -16,14 +16,6 @@ class NavalBattlePosition(object):
     def __str__(self) -> str:
         return f'{self.__row}{self.__column}'
 
-    @property
-    def row(self) -> str:
-        return self.__row
-
-    @property
-    def column(self) -> int:
-        return self.__column
-
     def to_position(self) -> Position:
         row = ProgramConstants.ROW_CHARS.index(self.__row) - ProgramConstants.ROW_CHARS.index(ProgramConstants.FIRST_ROW)
         column = ProgramConstants.COLUMNS - self.__column

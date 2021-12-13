@@ -4,8 +4,8 @@ from navalbattle.player import Player
 
 class NavalBattlePiece(Piece):
 
-    def __init__(self, board, player: Player) -> None:
-        super().__init__(board)
+    def __init__(self, player: Player) -> None:
+        super().__init__()
         self.__player = player
 
     @property

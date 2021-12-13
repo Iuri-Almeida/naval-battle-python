@@ -64,7 +64,7 @@ class NavalBattleMatch(object):
 
     def perform_first_move(self, target_position: NavalBattlePosition) -> None:
         target = target_position.to_position()
-        self.__person_board.place_piece(Submarine(self.__person_board, Player.PERSON), target)
+        self.__person_board.place_piece(Submarine(Player.PERSON), target)
 
     def perform_move(self, target_position: NavalBattlePosition) -> None:
         target = target_position.to_position()
@@ -110,15 +110,15 @@ class NavalBattleMatch(object):
                                                      isinstance(other_board.piece_by_position(target), WrongShotWithSubmarine)):
             if board.there_is_a_piece(target) and (isinstance(board.piece_by_position(target), Submarine) or
                                                    isinstance(board.piece_by_position(target), RightShotWithSubmarine)):
-                board.place_piece_without_exception(RightShotWithSubmarine(board, player), target)
+                board.place_piece_without_exception(RightShotWithSubmarine(player), target)
             else:
-                board.place_piece_without_exception(RightShot(board, player), target)
+                board.place_piece_without_exception(RightShot(player), target)
         else:
             if board.there_is_a_piece(target) and (isinstance(board.piece_by_position(target), Submarine) or
                                                    isinstance(board.piece_by_position(target), WrongShotWithSubmarine)):
-                board.place_piece_without_exception(WrongShotWithSubmarine(board, player), target)
+                board.place_piece_without_exception(WrongShotWithSubmarine(player), target)
             else:
-                board.place_piece_without_exception(WrongShot(board, player), target)
+                board.place_piece_without_exception(WrongShot(player), target)
 
     def __next_turn(self) -> None:
         self.__turn += 1
@@ -145,5 +145,5 @@ class NavalBattleMatch(object):
             position = NavalBattlePosition(row, column).to_position()
 
             if not self.__computer_board.there_is_a_piece(position):
-                self.__place_new_piece(row, column, Submarine(self.__computer_board, Player.COMPUTER))
+                self.__place_new_piece(row, column, Submarine(Player.COMPUTER))
                 i += 1

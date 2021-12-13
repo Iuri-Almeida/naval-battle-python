@@ -4,8 +4,8 @@ from navalbattle.player import Player
 
 class RightShot(NavalBattlePiece):
 
-    def __init__(self, board, player: Player) -> None:
-        super().__init__(board, player)
+    def __init__(self, player: Player) -> None:
+        super().__init__(player)
 
     def __str__(self) -> str:
         return '*'
