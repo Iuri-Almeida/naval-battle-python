@@ -9,4 +9,4 @@ class WrongShotWithSubmarine(NavalBattlePiece):
         super().__init__(board, player)
 
     def __str__(self) -> str:
-        return 'X'
+        return 'n'

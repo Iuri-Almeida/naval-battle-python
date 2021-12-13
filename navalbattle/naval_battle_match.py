@@ -106,6 +106,7 @@ class NavalBattleMatch(object):
             player = Player.COMPUTER
 
         if other_board.there_is_a_piece(target) and (isinstance(other_board.piece_by_position(target), Submarine) or
+                                                     isinstance(other_board.piece_by_position(target), RightShotWithSubmarine) or
                                                      isinstance(other_board.piece_by_position(target), WrongShotWithSubmarine)):
             if board.there_is_a_piece(target) and (isinstance(board.piece_by_position(target), Submarine) or
                                                    isinstance(board.piece_by_position(target), RightShotWithSubmarine)):
