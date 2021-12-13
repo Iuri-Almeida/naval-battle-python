@@ -47,8 +47,19 @@ class UI(object):
                 input('Click ENTER to continue.')
 
     @staticmethod
+    def print_winner(match: NavalBattleMatch) -> None:
+        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER)
+        print()
+        UI.__print_board(match.get_pieces(match.computer_board), ProgramConstants.COMPUTER)
+
+        winner = match.current_player
+        color = ProgramConstants.PERSON_PIECE_COLOR if winner == Player.PERSON else ProgramConstants.COMPUTER_PIECE_COLOR
+
+        print(f'\nWinner: {color}{winner.name}{ProgramConstants.RESET_COLOR}')
+
+    @staticmethod
     def print_match(match: NavalBattleMatch):
-        UI.__print_board(match.get_pieces(match.computer_board), ProgramConstants.PLAYER)
+        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER)
         print(f'\nTurn: {match.turn}')
 
     @staticmethod

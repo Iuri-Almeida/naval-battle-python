@@ -95,7 +95,8 @@ class NavalBattleMatch(object):
             other_board = self.__person_board
             player = Player.COMPUTER
 
-        if other_board.there_is_a_piece(target) and isinstance(other_board.piece_by_position(target), Submarine):
+        if other_board.there_is_a_piece(target) and (isinstance(other_board.piece_by_position(target), Submarine) or
+                                                     isinstance(other_board.piece_by_position(target), WrongShotWithSubmarine)):
             if board.there_is_a_piece(target) and (isinstance(board.piece_by_position(target), Submarine) or
                                                    isinstance(board.piece_by_position(target), RightShotWithSubmarine)):
                 board.place_piece_without_exception(RightShotWithSubmarine(board, player), target)

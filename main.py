@@ -21,7 +21,7 @@ def main() -> None:
             input('Click ENTER to continue.')
 
     UI.clear_screen()
-    UI.print_match(match)
+    UI.print_winner(match)
 
 
 if __name__ == '__main__':
