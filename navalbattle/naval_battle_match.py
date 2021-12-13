@@ -5,7 +5,11 @@ from boardgame.board import Board
 from boardgame.position import Position
 from navalbattle.naval_battle_piece import NavalBattlePiece
 from navalbattle.naval_battle_position import NavalBattlePosition
+from navalbattle.pieces.right_shot import RightShot
+from navalbattle.pieces.right_shot_with_submarine import RightShotWithSubmarine
 from navalbattle.pieces.submarine import Submarine
+from navalbattle.pieces.wrong_shot import WrongShot
+from navalbattle.pieces.wrong_shot_with_submarine import WrongShotWithSubmarine
 from navalbattle.player import Player
 
 
@@ -59,7 +63,20 @@ class NavalBattleMatch(object):
         self.__next_turn()
 
     def __make_move(self, target: Position) -> None:
-        self.__person_board.place_piece(Submarine(self.__person_board, Player.PERSON), target)
+        if self.__computer_board.there_is_a_piece(target):
+            if self.__person_board.there_is_a_piece(target):
+                self.__person_board.place_piece_without_exception(
+                    RightShotWithSubmarine(self.__person_board, Player.PERSON), target)
+            else:
+                self.__person_board.place_piece_without_exception(
+                    RightShot(self.__person_board, Player.PERSON), target)
+        else:
+            if self.__person_board.there_is_a_piece(target):
+                self.__person_board.place_piece_without_exception(
+                    WrongShotWithSubmarine(self.__person_board, Player.PERSON), target)
+            else:
+                self.__person_board.place_piece_without_exception(
+                    WrongShot(self.__person_board, Player.PERSON), target)
 
     def __next_turn(self) -> None:
         self.__turn += 1

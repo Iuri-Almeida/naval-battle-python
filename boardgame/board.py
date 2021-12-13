@@ -44,6 +44,10 @@ class Board(object):
         self.__pieces[position.row][position.column] = piece
         piece._position = position
 
+    def place_piece_without_exception(self, piece: Piece, position: Position) -> None:
+        self.__pieces[position.row][position.column] = piece
+        piece._position = position
+
     def __position_exists(self, row: int, column: int) -> bool:
         return 0 <= row < self.__rows and 0 <= column < self.__columns
 
