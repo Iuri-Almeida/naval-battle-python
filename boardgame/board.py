@@ -29,3 +29,7 @@ class Board(object):
 
     def piece_by_position(self, position: Position) -> Piece:
         return self.piece(position.row, position.column)
+
+    def place_piece(self, piece: Piece, position: Position) -> None:
+        self.__pieces[position.row][position.column] = piece
+        piece._position = position
