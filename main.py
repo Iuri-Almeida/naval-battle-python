@@ -1,9 +1,8 @@
-from boardgame.position import Position
+from boardgame.board import Board
 
 
 def main() -> None:
-    position = Position(2, 2)
-    print(position)
+    board = Board(10, 10)
 
 
 if __name__ == '__main__':
