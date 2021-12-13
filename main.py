@@ -8,7 +8,9 @@ def main() -> None:
 
     while True:
         try:
-            UI.print_board(match.get_pieces())
+            UI.clear_screen()
+            UI.print_match(match)
+
             target = UI.read_naval_battle_position('Target: ')
 
             match.perform_move(target)

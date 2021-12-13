@@ -13,11 +13,20 @@ class NavalBattleMatch(object):
 
     def __init__(self) -> None:
         self.__board = Board(ProgramConstants.ROWS, ProgramConstants.COLUMNS)
+        self.__turn = 1
+        self.__current_player = Player.PERSON
 
         self.__initial_setup()
 
-    def get_pieces(self) -> List[List[NavalBattlePiece]]:
+    @property
+    def turn(self) -> int:
+        return self.__turn
 
+    @property
+    def current_player(self) -> Player:
+        return self.__current_player
+
+    def get_pieces(self) -> List[List[NavalBattlePiece]]:
         rows = self.__board.rows
         columns = self.__board.columns
 
@@ -34,9 +43,14 @@ class NavalBattleMatch(object):
     def perform_move(self, target_position: NavalBattlePosition) -> None:
         target = target_position.to_position()
         self.__make_move(target)
+        self.__next_turn()
 
     def __make_move(self, target: Position) -> None:
         self.__board.place_piece(Submarine(self.__board, Player.PERSON), target)
+
+    def __next_turn(self) -> None:
+        self.__turn += 1
+        self.__current_player = Player.COMPUTER if self.__current_player == Player.PERSON else Player.PERSON
 
     def __place_new_piece(self, row: str, column: int, piece: NavalBattlePiece) -> None:
         self.__board.place_piece(piece, NavalBattlePosition(row, column).to_position())

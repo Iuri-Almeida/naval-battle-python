@@ -2,6 +2,7 @@ from os import system
 from typing import List
 
 from application.program_constants import ProgramConstants
+from navalbattle.naval_battle_match import NavalBattleMatch
 from navalbattle.naval_battle_piece import NavalBattlePiece
 from navalbattle.naval_battle_position import NavalBattlePosition
 from navalbattle.player import Player
@@ -25,10 +26,15 @@ class UI(object):
 
             return NavalBattlePosition(row, column)
         except RuntimeError:
-            raise ValueError('Error reading Position. Valida values are from a0 to j9.')
+            raise ValueError('Error reading Position. Valid values are from a0 to j9.')
 
     @staticmethod
-    def print_board(pieces: List[List[NavalBattlePiece]]):
+    def print_match(match: NavalBattleMatch):
+        UI.__print_board(match.get_pieces())
+        print(f'\nTurn: {match.turn}')
+
+    @staticmethod
+    def __print_board(pieces: List[List[NavalBattlePiece]]):
 
         rows = len(pieces)
         columns = len(pieces[0])
