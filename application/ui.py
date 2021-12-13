@@ -1,3 +1,4 @@
+from os import system
 from typing import List
 
 from application.program_constants import ProgramConstants
@@ -11,9 +12,13 @@ class UI(object):
     __ROWS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
     @staticmethod
+    def clear_screen() -> None:
+        system('clear')
+
+    @staticmethod
     def read_naval_battle_position(txt: str) -> NavalBattlePosition:
         try:
-            s = input(txt).strip().lower()
+            s = input(f'\n{txt}').strip().lower()
 
             row = s[0]
             column = 10 - int(s[1:])
