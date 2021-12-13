@@ -35,7 +35,7 @@ class UI(object):
         while i < ProgramConstants.TOTAL_SUBMARINES:
             try:
                 UI.clear_screen()
-                UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER_SETUP)
+                UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER_SETUP, ProgramConstants.PERSON_PIECE_COLOR)
 
                 target = UI.read_naval_battle_position('Target: ')
 
@@ -48,9 +48,9 @@ class UI(object):
 
     @staticmethod
     def print_winner(match: NavalBattleMatch) -> None:
-        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER)
+        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER, ProgramConstants.PERSON_PIECE_COLOR)
         print()
-        UI.__print_board(match.get_pieces(match.computer_board), ProgramConstants.COMPUTER)
+        UI.__print_board(match.get_pieces(match.computer_board), ProgramConstants.COMPUTER, ProgramConstants.COMPUTER_PIECE_COLOR)
 
         winner = match.current_player
         color = ProgramConstants.PERSON_PIECE_COLOR if winner == Player.PERSON else ProgramConstants.COMPUTER_PIECE_COLOR
@@ -59,16 +59,20 @@ class UI(object):
 
     @staticmethod
     def print_match(match: NavalBattleMatch):
-        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER)
+        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER, ProgramConstants.PERSON_PIECE_COLOR)
         print(f'\nTurn: {match.turn}')
+        print(f'{ProgramConstants.COMPUTER_PIECE_COLOR}Computer hits: '
+              f'{match.computer_board.hits}{ProgramConstants.RESET_COLOR}')
+        print(f'{ProgramConstants.PERSON_PIECE_COLOR}Person hits: '
+              f'{match.person_board.hits}{ProgramConstants.RESET_COLOR}')
 
     @staticmethod
-    def __print_board(pieces: List[List[NavalBattlePiece]], title: str):
+    def __print_board(pieces: List[List[NavalBattlePiece]], title: str, color: str):
 
         rows = len(pieces)
         columns = len(pieces[0])
 
-        UI.__print_title(title, ProgramConstants.PERSON_PIECE_COLOR)
+        UI.__print_title(title, color)
 
         print(f'{ProgramConstants.INDICATORS_COLOR}|   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |'
               f'{ProgramConstants.RESET_COLOR}')
