@@ -17,6 +17,8 @@ from navalbattle.player import Player
 
 class NavalBattleMatch(object):
 
+    __POSITIONS_ALREADY_VERIFIED: List[str] = []
+
     def __init__(self) -> None:
         self.__person_board = Board(ProgramConstants.ROWS, ProgramConstants.COLUMNS)
         self.__computer_board = Board(ProgramConstants.ROWS, ProgramConstants.COLUMNS)
@@ -77,6 +79,14 @@ class NavalBattleMatch(object):
     def __perform_computer_move(self) -> None:
         row = self.__generate_random_char()
         column = self.__generate_random_int()
+        pos = f'{row}{column}'
+
+        while pos in self.__POSITIONS_ALREADY_VERIFIED:
+            row = self.__generate_random_char()
+            column = self.__generate_random_int()
+            pos = f'{row}{column}'
+
+        self.__POSITIONS_ALREADY_VERIFIED.append(pos)
 
         target = NavalBattlePosition(row, column).to_position()
 
