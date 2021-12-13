@@ -2,6 +2,7 @@ from os import system
 from typing import List
 
 from application.program_constants import ProgramConstants
+from boardgame.board_exception import BoardException
 from navalbattle.naval_battle_match import NavalBattleMatch
 from navalbattle.naval_battle_piece import NavalBattlePiece
 from navalbattle.naval_battle_position import NavalBattlePosition
@@ -29,17 +30,34 @@ class UI(object):
             raise ValueError('Error reading Position. Valid values are from a0 to j9.')
 
     @staticmethod
+    def setup_person_board(match: NavalBattleMatch) -> None:
+        i = 0
+        while i < ProgramConstants.TOTAL_SUBMARINES:
+            try:
+                UI.clear_screen()
+                UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER_SETUP)
+
+                target = UI.read_naval_battle_position('Target: ')
+
+                match.perform_first_move(target)
+
+                i += 1
+            except (BoardException, ValueError) as e:
+                print(f'{e}\n')
+                input('Click ENTER to continue.')
+
+    @staticmethod
     def print_match(match: NavalBattleMatch):
-        UI.__print_board(match.get_pieces(match.computer_board))
+        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER)
         print(f'\nTurn: {match.turn}')
 
     @staticmethod
-    def __print_board(pieces: List[List[NavalBattlePiece]]):
+    def __print_board(pieces: List[List[NavalBattlePiece]], title: str):
 
         rows = len(pieces)
         columns = len(pieces[0])
 
-        UI.__print_title('JOGADOR', ProgramConstants.PERSON_PIECE_COLOR)
+        UI.__print_title(title, ProgramConstants.PERSON_PIECE_COLOR)
 
         print(f'{ProgramConstants.INDICATORS_COLOR}|   | 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 |'
               f'{ProgramConstants.RESET_COLOR}')

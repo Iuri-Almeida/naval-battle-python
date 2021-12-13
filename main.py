@@ -6,6 +6,8 @@ from navalbattle.naval_battle_match import NavalBattleMatch
 def main() -> None:
     match = NavalBattleMatch()
 
+    UI.setup_person_board(match)
+
     while True:
         try:
             UI.clear_screen()

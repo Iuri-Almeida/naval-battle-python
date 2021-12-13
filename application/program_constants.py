@@ -14,3 +14,11 @@ class ProgramConstants(object):
     COMPUTER_PIECE_COLOR = ANSIColorConstants.ANSI_YELLOW
     INDICATORS_COLOR = ANSIColorConstants.ANSI_GREEN
     RESET_COLOR = ANSIColorConstants.ANSI_RESET
+
+    # Game Numbers
+    TOTAL_SUBMARINES = 10
+
+    # Game Names
+    PLAYER = 'PLAYER'
+    PLAYER_SETUP = 'PLAYER (SETUP)'
+    COMPUTER = 'COMPUTER'

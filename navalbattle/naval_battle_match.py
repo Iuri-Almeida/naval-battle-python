@@ -49,6 +49,10 @@ class NavalBattleMatch(object):
 
         return pieces
 
+    def perform_first_move(self, target_position: NavalBattlePosition) -> None:
+        target = target_position.to_position()
+        self.__person_board.place_piece(Submarine(self.__person_board, Player.PERSON), target)
+
     def perform_move(self, target_position: NavalBattlePosition) -> None:
         target = target_position.to_position()
         self.__make_move(target)
