@@ -3,6 +3,8 @@ from typing import Optional, List
 from boardgame.board_exception import BoardException
 from boardgame.piece import Piece
 from boardgame.position import Position
+from navalbattle.pieces.right_shot import RightShot
+from navalbattle.pieces.right_shot_with_submarine import RightShotWithSubmarine
 
 
 class Board(object):
@@ -13,6 +15,7 @@ class Board(object):
 
         self.__rows = rows
         self.__columns = columns
+        self.__hits = 0
         self.__pieces: List[List[Optional[Piece]]] = []
         for _ in range(rows):
             row = []
@@ -27,6 +30,10 @@ class Board(object):
     @property
     def columns(self) -> int:
         return self.__columns
+
+    @property
+    def hits(self) -> int:
+        return self.__hits
 
     def piece(self, row: int, column: int) -> Piece:
         if not self.__position_exists(row, column):
@@ -45,6 +52,9 @@ class Board(object):
         piece._position = position
 
     def place_piece_without_exception(self, piece: Piece, position: Position) -> None:
+        if isinstance(piece, RightShot) or isinstance(piece, RightShotWithSubmarine):
+            self.__hits += 1
+
         self.__pieces[position.row][position.column] = piece
         piece._position = position
 

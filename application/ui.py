@@ -48,7 +48,7 @@ class UI(object):
 
     @staticmethod
     def print_match(match: NavalBattleMatch):
-        UI.__print_board(match.get_pieces(match.computer_board), ProgramConstants.PLAYER)
+        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER)
         print(f'\nTurn: {match.turn}')
 
     @staticmethod

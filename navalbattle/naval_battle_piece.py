@@ -1,11 +1,10 @@
-from boardgame.board import Board
 from boardgame.piece import Piece
 from navalbattle.player import Player
 
 
 class NavalBattlePiece(Piece):
 
-    def __init__(self, board: Board, player: Player) -> None:
+    def __init__(self, board, player: Player) -> None:
         super().__init__(board)
         self.__player = player
 

@@ -22,6 +22,7 @@ class NavalBattleMatch(object):
         self.__computer_board = Board(ProgramConstants.ROWS, ProgramConstants.COLUMNS)
         self.__turn = 1
         self.__current_player = Player.PERSON
+        self.__game_ended = False
 
         self.__initial_setup()
 
@@ -40,6 +41,10 @@ class NavalBattleMatch(object):
     @property
     def current_player(self) -> Player:
         return self.__current_player
+
+    @property
+    def is_game_ended(self) -> bool:
+        return self.__game_ended
 
     def get_pieces(self, board: Board) -> List[List[NavalBattlePiece]]:
         rows = board.rows
@@ -62,7 +67,12 @@ class NavalBattleMatch(object):
     def perform_move(self, target_position: NavalBattlePosition) -> None:
         target = target_position.to_position()
         self.__make_move(target, self.__person_board)
-        self.__next_turn()
+
+        self.__game_ended = self.__test_end_of_game(self.__person_board)
+
+        if not self.__game_ended:
+            self.__next_turn()
+            self.__perform_computer_move()
 
     def __perform_computer_move(self) -> None:
         row = self.__generate_random_char()
@@ -71,6 +81,11 @@ class NavalBattleMatch(object):
         target = NavalBattlePosition(row, column).to_position()
 
         self.__make_move(target, self.__computer_board)
+
+        self.__game_ended = self.__test_end_of_game(self.__computer_board)
+
+        if not self.__game_ended:
+            self.__next_turn()
 
     def __make_move(self, target: Position, board: Board) -> None:
         if board == self.__person_board:
@@ -95,7 +110,8 @@ class NavalBattleMatch(object):
         self.__turn += 1
         self.__current_player = Player.COMPUTER if self.__current_player == Player.PERSON else Player.PERSON
 
-        self.__perform_computer_move()
+    def __test_end_of_game(self, board: Board) -> bool:
+        return board.hits == ProgramConstants.TOTAL_SUBMARINES
 
     def __generate_random_char(self) -> str:
         return choice(ascii_lowercase[:10])

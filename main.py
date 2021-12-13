@@ -8,7 +8,7 @@ def main() -> None:
 
     UI.setup_person_board(match)
 
-    while True:
+    while not match.is_game_ended:
         try:
             UI.clear_screen()
             UI.print_match(match)
@@ -19,6 +19,9 @@ def main() -> None:
         except (BoardException, ValueError) as e:
             print(f'{e}\n')
             input('Click ENTER to continue.')
+
+    UI.clear_screen()
+    UI.print_match(match)
 
 
 if __name__ == '__main__':
