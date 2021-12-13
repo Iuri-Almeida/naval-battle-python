@@ -1,3 +1,5 @@
+from random import choice, randint
+from string import ascii_lowercase
 from typing import List, Optional, cast
 
 from application.program_constants import ProgramConstants
@@ -59,28 +61,47 @@ class NavalBattleMatch(object):
 
     def perform_move(self, target_position: NavalBattlePosition) -> None:
         target = target_position.to_position()
-        self.__make_move(target)
+        self.__make_move(target, self.__person_board)
         self.__next_turn()
 
-    def __make_move(self, target: Position) -> None:
-        if self.__computer_board.there_is_a_piece(target):
-            if self.__person_board.there_is_a_piece(target):
-                self.__person_board.place_piece_without_exception(
-                    RightShotWithSubmarine(self.__person_board, Player.PERSON), target)
-            else:
-                self.__person_board.place_piece_without_exception(
-                    RightShot(self.__person_board, Player.PERSON), target)
+    def __perform_computer_move(self) -> None:
+        row = self.__generate_random_char()
+        column = self.__generate_random_int()
+
+        target = NavalBattlePosition(row, column).to_position()
+
+        self.__make_move(target, self.__computer_board)
+
+    def __make_move(self, target: Position, board: Board) -> None:
+        if board == self.__person_board:
+            other_board = self.__computer_board
+            player = Player.PERSON
         else:
-            if self.__person_board.there_is_a_piece(target):
-                self.__person_board.place_piece_without_exception(
-                    WrongShotWithSubmarine(self.__person_board, Player.PERSON), target)
+            other_board = self.__person_board
+            player = Player.COMPUTER
+
+        if other_board.there_is_a_piece(target):
+            if board.there_is_a_piece(target):
+                board.place_piece_without_exception(RightShotWithSubmarine(board, player), target)
             else:
-                self.__person_board.place_piece_without_exception(
-                    WrongShot(self.__person_board, Player.PERSON), target)
+                board.place_piece_without_exception(RightShot(board, player), target)
+        else:
+            if board.there_is_a_piece(target):
+                board.place_piece_without_exception(WrongShotWithSubmarine(board, player), target)
+            else:
+                board.place_piece_without_exception(WrongShot(board, player), target)
 
     def __next_turn(self) -> None:
         self.__turn += 1
         self.__current_player = Player.COMPUTER if self.__current_player == Player.PERSON else Player.PERSON
+
+        self.__perform_computer_move()
+
+    def __generate_random_char(self) -> str:
+        return choice(ascii_lowercase[:10])
+
+    def __generate_random_int(self) -> int:
+        return randint(1, 10)
 
     def __place_new_piece(self, row: str, column: int, piece: NavalBattlePiece) -> None:
         self.__computer_board.place_piece(piece, NavalBattlePosition(row, column).to_position())

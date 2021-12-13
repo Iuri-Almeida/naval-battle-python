@@ -26,7 +26,7 @@ class UI(object):
             column = 10 - int(s[1:])
 
             return NavalBattlePosition(row, column)
-        except RuntimeError:
+        except (RuntimeError, IndexError):
             raise ValueError('Error reading Position. Valid values are from a0 to j9.')
 
     @staticmethod
@@ -48,7 +48,7 @@ class UI(object):
 
     @staticmethod
     def print_match(match: NavalBattleMatch):
-        UI.__print_board(match.get_pieces(match.person_board), ProgramConstants.PLAYER)
+        UI.__print_board(match.get_pieces(match.computer_board), ProgramConstants.PLAYER)
         print(f'\nTurn: {match.turn}')
 
     @staticmethod
