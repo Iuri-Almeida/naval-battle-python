@@ -1,8 +1,10 @@
-from boardgame.board import Board
+from application.ui import UI
+from navalbattle.naval_battle_match import NavalBattleMatch
 
 
 def main() -> None:
-    board = Board(10, 10)
+    match = NavalBattleMatch()
+    UI.print_board(match.get_pieces())
 
 
 if __name__ == '__main__':
